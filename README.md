@@ -64,7 +64,7 @@ store-skin/
    ```
 2. Avviare Apache e MySQL
 3. Importare il file `sql/esportazione.sql` in un nuovo database chiamato `store_skin`
-4. Visitare `http://localhost/store-skin/`
+4. Visitare `http://localhost/store_skin/`
 
 ---
 
