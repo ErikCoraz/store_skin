@@ -50,7 +50,7 @@ store-skin/
 * Aggiunta, modifica e cancellazione skin lato admin (via interfaccia)
 * Skin "Out of Stock" quando esaurite
 
-## Account admin di default
+## Account admin
 
 * **Username**: `admin`
 * **Password**: `admin123`
@@ -60,7 +60,7 @@ store-skin/
 1. Clonare il progetto in `htdocs/`
 
    ```bash
-   git clone https://github.com/ErikCoraz/progetto.git
+   git clone https://github.com/ErikCoraz/store_skin.git
    ```
 2. Avviare Apache e MySQL
 3. Importare il file `sql/esportazione.sql` in un nuovo database chiamato `store_skin`
