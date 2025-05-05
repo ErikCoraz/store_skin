@@ -21,6 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
                 $_SESSION['username'] = $utente['username'];               
                 $_SESSION['ruolo'] = $utente['ruolo'];                 // Salva le informazioni dell'utente nella sessione
 
+                // 🔄 Ripristina il carrello dal database
+                $stmt = $pdo->prepare("SELECT id_skin FROM carrello WHERE id_utente = ?");
+                $stmt->execute([$utente['id']]);
+                $items = $stmt->fetchAll(PDO::FETCH_COLUMN);  // Ottieni solo la colonna id_skin
+                $_SESSION['carrello'] = $items ?: [];         // Salva nella sessione
+
                 if ($utente['ruolo'] === 'admin') {               // Se l'utente è admin, reindirizza alla dashboard admin
                     header("Location: admin/dashboard.php");
                 } else {

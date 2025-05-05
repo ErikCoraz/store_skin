@@ -1,50 +1,37 @@
 <?php
-session_start();
-require_once __DIR__ . '/includes/db.php';
-require_once __DIR__ . '/includes/auth.php';
+require_once 'includes/db.php';
+require_once 'includes/auth.php';
+requireLogin();
 
-// Gestione aggiunta al carrello (POST)
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['skin_id'])) {
-    $skin_id = (int) $_POST['skin_id'];
-
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
-
-    if (isset($_SESSION['cart'][$skin_id])) {
-        $_SESSION['cart'][$skin_id]++;
-    } else {
-        $_SESSION['cart'][$skin_id] = 1;
-    }
-
-    // Redirect per evitare il reinvio del form
-    header("Location: cart.php");
-    exit;
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-// Recupera le informazioni sulle skin nel carrello
-$cartItems = [];
-$total = 0;
+$carrello = $_SESSION['carrello'] ?? [];
 
-if (!empty($_SESSION['cart'])) {
-    $placeholders = implode(',', array_fill(0, count($_SESSION['cart']), '?'));
+$skins = [];
+if (!empty($carrello)) {
+    $placeholders = implode(',', array_fill(0, count($carrello), '?'));
     $stmt = $pdo->prepare("SELECT * FROM skin WHERE id IN ($placeholders)");
-    $stmt->execute(array_keys($_SESSION['cart']));
+    $stmt->execute($carrello);
     $skins = $stmt->fetchAll();
+}
 
-    foreach ($skins as $skin) {
-        $qty = $_SESSION['cart'][$skin['id']];
-        $subtotal = $skin['prezzo'] * $qty;
-        $total += $subtotal;
-        $cartItems[] = [
-            'id' => $skin['id'],
-            'nome' => $skin['nome'],
-            'immagine' => $skin['immagine'],
-            'prezzo' => $skin['prezzo'],
-            'quantita' => $qty,
-            'subtotal' => $subtotal
-        ];
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {
+    $nickname = trim($_POST['nickname']);
+
+    // Decrementa quantità per ogni skin nel carrello
+    $stmt = $pdo->prepare("UPDATE skin SET quantita = quantita - 1 WHERE id = ? AND quantita > 0");
+    foreach ($carrello as $id) {
+        $stmt->execute([$id]);
     }
+
+    $_SESSION['carrello'] = []; // Svuota carrello
+    $stmt = $pdo->prepare("DELETE FROM carrello WHERE id_utente = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+
+    echo json_encode(['success' => true]);
+    exit;
 }
 ?>
 
@@ -54,37 +41,95 @@ if (!empty($_SESSION['cart'])) {
     <meta charset="UTF-8">
     <title>Carrello</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .popup {
+            display: none;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 2px solid black;
+            z-index: 10;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 5;
+        }
+    </style>
 </head>
 <body>
     <nav>
         <ul>
             <li><a href="index.php">Home</a></li>
-            <li><a href="login.php">Login</a></li>
-            <li><a href="register.php">Register</a></li>
-            <li><a href="cart.php">Carrello</a></li>
+            <li><span>Carrello</span></li>
         </ul>
     </nav>
 
     <main class="container">
-        <h1>Il tuo carrello</h1>
+        <h2>Il tuo carrello</h2>
 
-        <?php if (!empty($cartItems)): ?>
-            <div class="cart-grid">
-                <?php foreach ($cartItems as $item): ?>
-                    <div class="cart-item">
-                        <img src="assets/img/<?= htmlspecialchars($item['immagine']) ?>" alt="<?= htmlspecialchars($item['nome']) ?>">
-                        <h3><?= htmlspecialchars($item['nome']) ?></h3>
-                        <p>Prezzo: €<?= number_format($item['prezzo'], 2) ?></p>
-                        <p>Quantità: <?= $item['quantita'] ?></p>
-                        <p>Subtotale: €<?= number_format($item['subtotal'], 2) ?></p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            <h2>Totale: €<?= number_format($total, 2) ?></h2>
-        <?php else: ?>
-            <p>Il tuo carrello è vuoto.</p>
-        <?php endif; ?>
-        
+        <?php if (count($skins) > 0): ?>
+    <ul class="cart-list">
+        <?php 
+        $totale = 0;
+        foreach ($skins as $skin): 
+            $totale += $skin['prezzo'];
+        ?>
+            <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                <img src="assets/img/<?= htmlspecialchars($skin['immagine']) ?>" alt="<?= htmlspecialchars($skin['nome']) ?>" style="width: 60px; height: auto;">
+                <span><?= htmlspecialchars($skin['nome']) ?> - €<?= number_format($skin['prezzo'], 2) ?></span>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+    <p><strong>Totale: €<?= number_format($totale, 2) ?></strong></p>
+    <button onclick="mostraPopup()">Acquista</button>
+<?php else: ?>
+    <p>Il tuo carrello è vuoto.</p>
+<?php endif; ?>
+
     </main>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="popup" id="popup">
+        <h3>Inserisci il tuo nickname LoL</h3>
+        <input type="text" id="nickname" placeholder="Nickname">
+        <button onclick="inviaAcquisto()">Invia</button>
+    </div>
+
+    <div class="popup" id="conferma">
+        <h3>Acquisto riuscito!</h3>
+        <a href="index.php"><button>Torna alla home</button></a>
+    </div>
+
+    <script>
+        function mostraPopup() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function inviaAcquisto() {
+            const nickname = document.getElementById('nickname').value;
+            if (!nickname) return alert("Inserisci il tuo nickname");
+
+            fetch('cart.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ nickname })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('popup').style.display = 'none';
+                    document.getElementById('conferma').style.display = 'block';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
