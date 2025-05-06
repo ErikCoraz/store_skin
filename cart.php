@@ -35,21 +35,40 @@ if (!empty($carrello)) {
     $skins = $stmt->fetchAll();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {             // Acquista skin
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {
     $nickname = trim($_POST['nickname']);
+    $esaurite = [];
 
-    $stmt = $pdo->prepare("UPDATE skin SET quantita = quantita - 1 WHERE id = ? AND quantita > 0");
-    foreach ($carrello as $id) {
-        $stmt->execute([$id]);
+    // Recupera la disponibilità attuale delle skin nel carrello
+    $placeholders = implode(',', array_fill(0, count($carrello), '?'));
+    $stmt = $pdo->prepare("SELECT id, nome, quantita FROM skin WHERE id IN ($placeholders)");
+    $stmt->execute($carrello);
+    $datiSkin = $stmt->fetchAll();
+
+    foreach ($datiSkin as $skin) {
+        if ((int)$skin['quantita'] <= 0) {
+            $esaurite[] = $skin['nome'];
+        }
     }
 
-    $_SESSION['carrello'] = [];                                      // Svuota carrello
-    $stmt = $pdo->prepare("DELETE FROM carrello WHERE id_utente = ?");
-    $stmt->execute([$user_id]);
+    if (!empty($esaurite)) {
+        echo json_encode(['success' => false, 'out_of_stock' => $esaurite]);
+    } else {
+        $stmt = $pdo->prepare("UPDATE skin SET quantita = quantita - 1 WHERE id = ? AND quantita > 0");
+        foreach ($carrello as $id) {
+            $stmt->execute([$id]);
+        }
 
-    echo json_encode(['success' => true]);
+        $_SESSION['carrello'] = [];
+        $stmt = $pdo->prepare("DELETE FROM carrello WHERE id_utente = ?");
+        $stmt->execute([$user_id]);
+
+        echo json_encode(['success' => true]);
+    }
+
     exit;
 }
+
 ?>
 
 
@@ -84,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {       
     <nav>
         <ul>
             <li><a href="index.php">Home</a></li>
-            <li><span>Carrello</span></li>
+            <li><a href="cart.php">Carrello</a></li>
         </ul>
     </nav>
 
@@ -160,9 +179,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {       
                 if (data.success) {
                     document.getElementById('popup').style.display = 'none';
                     document.getElementById('conferma').style.display = 'block';
+                } else if (data.out_of_stock) {
+                    alert("Le seguenti skin sono esaurite:\n\n" + data.out_of_stock.join('\n'));
                 }
-            });
-        }
+});
+
+}
     </script>
 </body>
 </html>

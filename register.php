@@ -39,6 +39,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {                  // Controllo se il 
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+<nav>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+        </ul>
+</nav>
     <h2>Registrati</h2>
     <?php if (!empty($errore)) echo "<p style='color:red;'>$errore</p>"; ?>           <!-- Mostra messaggio di errore se presente -->
     <form method="post" action="">                                                    <!-- Invia i dati al server -->
