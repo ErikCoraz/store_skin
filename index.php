@@ -2,50 +2,84 @@
 require_once 'includes/db.php';
 require_once 'includes/auth.php';
 
-if (session_status() === PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {             // Avvia la sessione se non è già attiva
     session_start();
 }
 
-$search = $_GET['search'] ?? '';
-$filter = $_GET['filter'] ?? '';
+$search = $_GET['search'] ?? '';                         // Recupera i filtri dai parametri GET (se presenti), altrimenti una stringa vuota
+$filter = $_GET['filter'] ?? '';               
+$prezzoFiltro = $_GET['prezzo'] ?? '';                
+$sort = $_GET['sort'] ?? '';
 
-// Query dinamica
-$sql = "SELECT * FROM skin WHERE 1";
+
+$sql = "SELECT * FROM skin WHERE 1";       // Inizializza la query SQL con una condizione sempre vera (1) per semplificare l'aggiunta di filtri
 $params = [];
 
-if (!empty($search)) {
+if (!empty($search)) {                    // Applica filtro per nome, se presente
     $sql .= " AND nome LIKE ?";
     $params[] = "%$search%";
 }
 
-if ($filter === 'available') {
+if ($filter === 'available') {                   // Applica filtro per disponibilità (disponibili / non disponibili)
     $sql .= " AND quantita > 0";
+} elseif ($filter === 'unavailable') {
+    $sql .= " AND quantita = 0";
 }
 
-$stmt = $pdo->prepare($sql);
-$stmt->execute($params);
-$skins = $stmt->fetchAll();
+if (!empty($prezzoFiltro)) {                               // Applica filtro per prezzo, con supporto per operatori logici
+    if (preg_match('/^(<=|>=|<|>)(\d+(?:[.,]\d{1,2})?)$/', $prezzoFiltro, $match)) {
+        $operatore = $match[1];
+        $valore = str_replace(',', '.', $match[2]);        // Supporta sia virgola sia punto
+        $sql .= " AND prezzo $operatore ?";
+        $params[] = $valore;
+    } elseif (preg_match('/^\d+(?:[.,]\d{1,2})?$/', $prezzoFiltro)) {
+        $valore = str_replace(',', '.', $prezzoFiltro);
+        $sql .= " AND prezzo = ?";
+        $params[] = $valore;
+    }
+}
+switch ($sort) {                        // Applica ordinamento se specificato
+    case 'az':
+        $sql .= " ORDER BY nome ASC";        // Ordina per nome in ordine crescente
+        break;
+    case 'za':
+        $sql .= " ORDER BY nome DESC";          // Ordina per nome in ordine decrescente
+        break;
+    case 'prezzo_asc':
+        $sql .= " ORDER BY prezzo ASC";           // Ordina per prezzo in ordine crescente
+        break;
+    case 'prezzo_desc':
+        $sql .= " ORDER BY prezzo DESC";           // Ordina per prezzo in ordine decrescente
+        break; 
+    default:
+        break;                               // Ordine di default (dettato dal db), nessun ordinamento specificato
+}
 
-// Gestione carrello via sessione 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_to_cart') {
-    $skin_id = $_POST['skin_id'];
 
-    if (!isset($_SESSION['carrello'])) {
+$stmt = $pdo->prepare($sql);                  // Prepara la query SQL
+$stmt->execute($params);                      // Esegue la query con i parametri forniti
+$skins = $stmt->fetchAll();                   // Recupera tutte le skin che soddisfano i criteri di ricerca e filtro
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'add_to_cart') { // Verifica se la richiesta è di tipo POST, se esiste l'azione specificata e se è "add_to_cart"
+    $skin_id = $_POST['skin_id'];                                               // Estrae l'ID della skin dal corpo della richiesta POST
+
+    if (!isset($_SESSION['carrello'])) {         // Se la variabile di sessione 'carrello' non è ancora stata inizializzata, la crea come array vuoto
         $_SESSION['carrello'] = [];
     }
 
-    if (!in_array($skin_id, $_SESSION['carrello'])) {
+    if (!in_array($skin_id, $_SESSION['carrello'])) {    // Se l'ID della skin non è già presente nel carrello di sessione, lo aggiunge
         $_SESSION['carrello'][] = $skin_id;
     
-        // Salva anche nel DB
-        if (isset($_SESSION['user_id'])) {
-            $stmt = $pdo->prepare("INSERT IGNORE INTO carrello (id_utente, id_skin) VALUES (?, ?)");
-            $stmt->execute([$_SESSION['user_id'], $skin_id]);
+
+        if (isset($_SESSION['user_id'])) {         // Se l'utente è loggato prepara una query per inserire nel database la coppia utente-skin
+            $stmt = $pdo->prepare("INSERT IGNORE INTO carrello (id_utente, id_skin) VALUES (?, ?)");       // "INSERT IGNORE" evita duplicati se la riga esiste già
+            $stmt->execute([$_SESSION['user_id'], $skin_id]);     // Esegue la query con l'ID dell'utente e della skin
         }
     }
     
 
-    echo json_encode(['success' => true]);
+    echo json_encode(['success' => true]);  // Restituisce una risposta JSON al client per confermare che la skin è stata aggiunta
     exit;
 }
 ?>
@@ -94,14 +128,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <main class="container">
         <h1>Store di Skin LoL</h1>
 
-        <form method="GET">
-            <input type="text" name="search" placeholder="Cerca skin..." value="<?= htmlspecialchars($search) ?>">
-            <select name="filter">
-                <option value="">--Filtra--</option>
-                <option value="available" <?= $filter === 'available' ? 'selected' : '' ?>>Solo disponibili</option>
-            </select>
-            <button type="submit">Cerca</button>
-        </form>
+<form method="GET">
+    <input type="text" name="search" placeholder="Cerca skin..." value="<?= htmlspecialchars($search) ?>">
+    <input type="text" name="prezzo" placeholder="Prezzo..." value="<?= htmlspecialchars($_GET['prezzo'] ?? '') ?>">
+    
+    <select name="filter">
+        <option value="">Tutte</option>
+        <option value="available" <?= $filter === 'available' ? 'selected' : '' ?>>Solo disponibili</option>
+        <option value="unavailable" <?= $filter === 'unavailable' ? 'selected' : '' ?>>Non disponibili</option>
+    </select>
+
+    <select name="sort">
+        <option value="">Ordine di default</option>
+        <option value="az" <?= ($_GET['sort'] ?? '') === 'az' ? 'selected' : '' ?>>A-Z</option>
+        <option value="za" <?= ($_GET['sort'] ?? '') === 'za' ? 'selected' : '' ?>>Z-A</option>
+        <option value="prezzo_asc" <?= ($_GET['sort'] ?? '') === 'prezzo_asc' ? 'selected' : '' ?>>Prezzo crescente</option>
+        <option value="prezzo_desc" <?= ($_GET['sort'] ?? '') === 'prezzo_desc' ? 'selected' : '' ?>>Prezzo decrescente</option>
+    </select>
+
+    <button type="submit">Cerca</button>
+</form>
+
+
 
         <div class="skin-grid">
             <?php foreach ($skins as $skin): ?>
