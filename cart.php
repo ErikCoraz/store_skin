@@ -7,6 +7,24 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+$user_id = $_SESSION['user_id'];
+$carrello = $_SESSION['carrello'] ?? [];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['rimuovi_id'])) {            // Rimuovi skin dal carrello
+    $idToRemove = (int) $_POST['rimuovi_id'];
+
+    // Rimuove dalla sessione
+    $_SESSION['carrello'] = array_values(array_filter($carrello, fn($id) => $id != $idToRemove));
+
+    // Rimuove dal DB
+    $stmt = $pdo->prepare("DELETE FROM carrello WHERE id_utente = ? AND id_skin = ? LIMIT 1");
+    $stmt->execute([$user_id, $idToRemove]);
+
+    // Redirect per evitare reinvio POST
+    header("Location: cart.php");
+    exit;
+}
+
 $carrello = $_SESSION['carrello'] ?? [];
 
 $skins = [];
@@ -17,23 +35,23 @@ if (!empty($carrello)) {
     $skins = $stmt->fetchAll();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {             // Acquista skin
     $nickname = trim($_POST['nickname']);
 
-    // Decrementa quantità per ogni skin nel carrello
     $stmt = $pdo->prepare("UPDATE skin SET quantita = quantita - 1 WHERE id = ? AND quantita > 0");
     foreach ($carrello as $id) {
         $stmt->execute([$id]);
     }
 
-    $_SESSION['carrello'] = []; // Svuota carrello
+    $_SESSION['carrello'] = [];                                      // Svuota carrello
     $stmt = $pdo->prepare("DELETE FROM carrello WHERE id_utente = ?");
-    $stmt->execute([$_SESSION['user_id']]);
+    $stmt->execute([$user_id]);
 
     echo json_encode(['success' => true]);
     exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="it">
@@ -83,6 +101,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {
             <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                 <img src="assets/img/<?= htmlspecialchars($skin['immagine']) ?>" alt="<?= htmlspecialchars($skin['nome']) ?>" style="width: 60px; height: auto;">
                 <span><?= htmlspecialchars($skin['nome']) ?> - €<?= number_format($skin['prezzo'], 2) ?></span>
+                
+                <!-- 🔴 Bottone Rimuovi -->
+                <form method="POST" style="margin-left: auto;">
+                    <input type="hidden" name="rimuovi_id" value="<?= $skin['id'] ?>">
+                    <button type="submit">Rimuovi</button>
+                </form>
             </li>
         <?php endforeach; ?>
     </ul>
@@ -92,15 +116,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {
     <p>Il tuo carrello è vuoto.</p>
 <?php endif; ?>
 
+
     </main>
 
     <div class="overlay" id="overlay"></div>
 
     <div class="popup" id="popup">
-        <h3>Inserisci il tuo nickname LoL</h3>
-        <input type="text" id="nickname" placeholder="Nickname">
-        <button onclick="inviaAcquisto()">Invia</button>
-    </div>
+    <button onclick="chiudiPopup()" style="position: absolute; top: 5px; right: 10px; background: none; border: none; font-size: 18px; cursor: pointer;">&times;</button>
+    <h3>Inserisci il tuo nickname LoL</h3>
+    <input type="text" id="nickname" placeholder="Nickname">
+    <button onclick="inviaAcquisto()">Invia</button>
+</div>
+
 
     <div class="popup" id="conferma">
         <h3>Acquisto riuscito!</h3>
@@ -112,6 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {
             document.getElementById('overlay').style.display = 'block';
             document.getElementById('popup').style.display = 'block';
         }
+
+        function chiudiPopup() {
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+}
+
 
         function inviaAcquisto() {
             const nickname = document.getElementById('nickname').value;

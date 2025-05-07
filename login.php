@@ -53,6 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="index.php">Home</a></li>
+        </ul>
+    </nav>
     <div class="login-container">
         <h2>Accedi</h2>
         <?php if (!empty($errore)): ?>
