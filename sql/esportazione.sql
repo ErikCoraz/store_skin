@@ -33,3 +33,11 @@ CREATE TABLE carrello (
     FOREIGN KEY (id_utente) REFERENCES utenti(id) ON DELETE CASCADE,
     FOREIGN KEY (id_skin) REFERENCES skin(id) ON DELETE CASCADE
 );
+
+CREATE TABLE login_tokens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    token CHAR(64) NOT NULL UNIQUE,
+    expires_at DATETIME NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES utenti(id) ON DELETE CASCADE
+);
