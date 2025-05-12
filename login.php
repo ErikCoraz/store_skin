@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
                 $items = $stmt->fetchAll(PDO::FETCH_COLUMN);  // Ottieni solo la colonna id_skin
                 $_SESSION['carrello'] = $items ?: [];         // Salva nella sessione
 
-                if ($ricordami) {                           // Se l'utente ha selezionato "Ricordami" ($ricordami è true)
+                if ($ricordami && $utente['ruolo'] !== 'admin') {          // Se l'utente ha selezionato "Ricordami" ($ricordami è true) e NON è admin
                     $token = bin2hex(random_bytes(32));     // Genera una stringa binaria (random_bytes), poi la converte in esadecimale (bin2hex)
                     $expires = date('Y-m-d H:i:s', time() + (86400 * 30)); // Scadenza: 30 giorni (86400 secondi × 30)
                     $stmt = $pdo->prepare("INSERT INTO login_tokens (user_id, token, expires_at) VALUES (?, ?, ?)"); 
@@ -37,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
                 }
 
                 if ($utente['ruolo'] === 'admin') {               // Se l'utente è admin, reindirizza alla dashboard admin
+                    $_SESSION['admin_authenticated'] = true;     // Flag temporaneo solo per la sessione corrente, dura fino a logou o chiusura del browser
                     header("Location: admin/dashboard.php");
                 } else {
                     header("Location: index.php");       // Altrimenti, reindirizza alla home page

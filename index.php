@@ -2,6 +2,12 @@
 require_once 'includes/db.php';
 require_once 'includes/auth.php';
 
+if (isLoggedIn() && isAdmin()) {          // Se l'utente è loggato e admin, reindirizza alla dashboard admin
+    header('Location: admin/dashboard.php');
+    exit;
+}
+
+
 if (session_status() === PHP_SESSION_NONE) {             // Avvia la sessione se non è già attiva
     session_start();
 }
