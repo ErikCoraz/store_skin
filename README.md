@@ -6,19 +6,20 @@ Questo progetto è uno store online per la vendita di **skin di League of Legend
 
 * **HTML/CSS** per il frontend
 * **PHP** per la logica lato server
+* **JavaScript** lato client
 * **MySQL** (gestito tramite HeidiSQL) per la base dati
-* **Apache** come server web locale&#x20;
+* **Apache** come server web locale
 * **Git** e **GitHub** per il controllo versione
 
 ## Struttura del progetto
 
 ```
 store-skin/
-├── index.php                 # Homepage con carrellata di skin e filtri
-├── login.php                 # Login utente e admin
-├── register.php              # Registrazione utenti
-├── logout.php                # Logout
-├── cart.php                  # Carrello utenti
+├── index.php                # Homepage con carrellata di skin e filtri
+├── login.php                # Login utente e admin
+├── register.php             # Registrazione utenti
+├── logout.php               # Logout
+├── cart.php                 # Carrello utenti
 │
 ├── admin/                   # Area admin
 │   ├── dashboard.php
@@ -37,7 +38,8 @@ store-skin/
 ├── sql/esportazione.sql     # Esportazione struttura + contenuto DB
 ├── README.md                # Spiegazione del progetto
 ├── .gitignore               # File ignorati da Git
-└── LICENSE (facoltativo)
+├── LICENSE (facoltativo)
+└── documentation/           # Documentazione del progetto
 ```
 
 ## Funzionalità principali

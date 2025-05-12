@@ -117,7 +117,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {       
                 <img src="assets/img/<?= htmlspecialchars($skin['immagine']) ?>" alt="<?= htmlspecialchars($skin['nome']) ?>" style="width: 60px; height: auto;">
                 <span><?= htmlspecialchars($skin['nome']) ?> - €<?= number_format($skin['prezzo'], 2) ?></span>
                 
-                <!-- 🔴 Bottone Rimuovi -->
                 <form method="POST" style="margin-left: auto;">
                     <input type="hidden" name="rimuovi_id" value="<?= $skin['id'] ?>">
                     <button type="submit">Rimuovi</button>
