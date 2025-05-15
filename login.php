@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
     $ricordami = isset($_POST['ricordami']);             // Verifica se l'utente ha selezionato "Ricordami"
  
     if (!empty($username) && !empty($password)) {                             // Verifica che i campi non siano vuoti
-        $stmt = $pdo->prepare("SELECT * FROM utenti WHERE username = ?");       // Prepara la query per selezionare l'utente
+        $stmt = $pdo->prepare("SELECT * FROM utenti WHERE BINARY username = ?");       // Prepara la query per selezionare l'utente (binary per evitare problemi di case sensitivity)
         $stmt->execute([$username]);              
         $utente = $stmt->fetch();              // Esegue la query e recupera l'utente
 
