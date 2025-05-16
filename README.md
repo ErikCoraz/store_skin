@@ -33,6 +33,7 @@ store-skin/
 │
 ├── assets/
 │   ├── css/style.css        # Stili personalizzati
+│   ├── js/dark-mode.js      # File JS gestione dark-mode
 │   └── img/                 # Immagini delle skin
 │
 ├── sql/esportazione.sql     # Esportazione struttura + contenuto DB
