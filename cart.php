@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {       
     <div class="overlay" id="overlay"></div>
 
     <div class="popup" id="popup">
-    <button onclick="chiudiPopup()" style="position: absolute; top: 5px; right: 10px; background: none; border: none; font-size: 18px; cursor: pointer;">&times;</button>
+    <button class="close-btn" onclick="chiudiPopup()">&times;</button>
     <h3>Inserisci il tuo nickname LoL</h3>
     <input type="text" id="nickname" placeholder="Nickname">
     <button onclick="inviaAcquisto()">Invia</button>

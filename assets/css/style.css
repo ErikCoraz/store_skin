@@ -211,6 +211,7 @@ a:hover {                  /* Stile per il passaggio del mouse sui link */
   border-radius: 8px;
 }
 
+
 .overlay {         /* Stile per lo sfondo del popup */
   display: none;
   position: fixed;
@@ -257,4 +258,26 @@ a:hover {                  /* Stile per il passaggio del mouse sui link */
 .cart-item form {         /* Form associato all’item (per rimuovere o acquistare) */
     margin: 0;
 }
+
+.close-btn {            /* Stile per il pulsante di chiusura del popup di acquisto skin (x) */
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--text-color); 
+  line-height: 1;
+  padding: 0;
+}
+
+.close-btn:hover {          /* Stiler per l'hover della x */
+  opacity: 0.6;
+  background: none; 
+  color: red;
+}
+
+
 
