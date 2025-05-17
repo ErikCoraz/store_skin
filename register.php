@@ -7,14 +7,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {                  // Controllo se il 
     $password = $_POST["password"];
     $confirm_password = $_POST["confirm_password"];
 
-    if (empty($username)  empty($password)  empty($confirm_password)) {              // Verifica che tutti i campi siano stati compilati (non siano vuoti)
+    if (empty($username) || empty($password) || empty($confirm_password)) {              // Verifica che tutti i campi siano stati compilati (non siano vuoti)
         $errore = "Tutti i campi sono obbligatori.";
     } elseif ($password !== $confirm_password) {                                   // Verifica che le password coincidano
         $errore = "Le password non coincidono.";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);                              // Hash della password
 
-        try {
+        try {                                                                                                  
             $stmt = $pdo->prepare("INSERT INTO utenti (username, password, ruolo) VALUES (?, ?, 'utente')");       // Inserimento utente nel database
             $stmt->execute([$username, $hashed_password]);
             $_SESSION["successo"] = "Registrazione completata. Ora puoi accedere.";                   // Messaggio di successo

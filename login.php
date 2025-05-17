@@ -66,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
     <nav>
         <ul>
             <li><a href="index.php">Home</a></li>
+            <li><button id="toggle-dark">🌓 Dark Mode</button></li>
         </ul>
     </nav>
     <div class="login-container">
@@ -88,5 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
         </form>
         <p>Non hai un account? <a href="register.php">Registrati</a></p>
     </div>
+<script src="assets/js/dark-mode.js"></script>
 </body>
 </html>

@@ -120,6 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <ul>
         <li><a href="index.php">Home</a></li>
         <li><a href="cart.php">Carrello</a></li>
+        <li><button id="toggle-dark">🌓 Dark Mode</button></li>
 
         <?php if (!isLoggedIn()): ?>
             <li><a href="login.php">Login</a></li>
@@ -176,5 +177,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <?php endforeach; ?>
         </div>
     </main>
+<script src="assets/js/dark-mode.js"></script>
 </body>
 </html>
