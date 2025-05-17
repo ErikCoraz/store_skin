@@ -49,7 +49,7 @@ nav ul {
 }
 
 nav ul li a, nav ul li span {
-    color: var(--text-color);
+    color: white; 
     text-decoration: none;
     font-weight: bold;
     padding: 6px 10px;
@@ -62,8 +62,8 @@ nav ul li a:hover {
 
 #toggle-dark {
     background: none;
-    border: 1px solid var(--text-color);
-    color: var(--text-color);
+    border: 1px solid #fff;
+    color: #fff;
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
@@ -84,7 +84,7 @@ nav ul li a:hover {
 
 h1, h2 {
     margin-bottom: 20px;
-    color: var(--nav-bg);
+    color: var(--text-color);
 }
 
 form {
