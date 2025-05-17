@@ -74,32 +74,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {       
     <meta charset="UTF-8">
     <title>Carrello</title>
     <link rel="stylesheet" href="assets/css/style.css">
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 30%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            border: 2px solid black;
-            z-index: 10;
-        }
-        .overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: 5;
-        }
-    </style>
+
 </head>
 <body>
     <nav>
         <ul>
             <li><a href="index.php">Home</a></li>
             <li><a href="cart.php">Carrello</a></li>
+            <li><button id="toggle-dark">🌓 Dark Mode</button></li>
         </ul>
     </nav>
 
@@ -113,17 +95,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {       
         foreach ($skins as $skin): 
             $totale += $skin['prezzo'];
         ?>
-            <li style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                <img src="assets/img/<?= htmlspecialchars($skin['immagine']) ?>" alt="<?= htmlspecialchars($skin['nome']) ?>" style="width: 60px; height: auto;">
+            <li class="cart-item">
+                <img src="assets/img/<?= htmlspecialchars($skin['immagine']) ?>" alt="<?= htmlspecialchars($skin['nome']) ?>">
                 <span><?= htmlspecialchars($skin['nome']) ?> - €<?= number_format($skin['prezzo'], 2) ?></span>
-                
-                <form method="POST" style="margin-left: auto;">
+                <form method="POST">
                     <input type="hidden" name="rimuovi_id" value="<?= $skin['id'] ?>">
                     <button type="submit">Rimuovi</button>
                 </form>
             </li>
         <?php endforeach; ?>
     </ul>
+
     <p><strong>Totale: €<?= number_format($totale, 2) ?></strong></p>
     <button onclick="mostraPopup()">Acquista</button>
 <?php else: ?>
@@ -181,5 +163,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {       
 
 }
     </script>
+<script src="assets/js/dark-mode.js"></script>
 </body>
 </html>
