@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 </nav>
 
     <main class="container">
-        <h1>Toilettongen</h1>
+        <h1>Sghiffoshop</h1>
 
 <form method="GET">
     <input type="text" name="search" placeholder="Cerca skin..." value="<?= htmlspecialchars($search) ?>">

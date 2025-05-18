@@ -152,6 +152,13 @@ a:hover {                            /* Hover sui link */
     box-shadow: 0 3px 5px rgba(0,0,0,0.05);
 }
 
+.skin-card:hover {                    /* Hover skin card */
+    transform: scale(1.03);
+    box-shadow:
+        0 0 15px rgba(88, 178, 206),
+        0 0 30px rgb(88, 178, 206);
+}
+
 .skin-card img {                     /* Immagine della skin */
     width: 100%;
     height: auto;
