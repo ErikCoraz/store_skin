@@ -194,13 +194,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 </div>
     </main>
 
-   <footer>
+<footer>
     <div class="footer-container">
         <p>&copy; 2025 Summoner's Shop. Tutti i diritti riservati.</p>
         <ul class="footer-links">
-            <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Privacy</a></li>
-            <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Termini</a></li>
-            <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Contatti</a></li>
+            <li><a>📞 +39 370 319 2498</a></li>
+            <li><a>📧 summoner@shop.com</a></li>
+            <li><a>🏠 Faenza</a></li>
         </ul>
     </div>
 </footer> 

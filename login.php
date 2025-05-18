@@ -61,6 +61,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
     <meta charset="UTF-8">
     <title>Login - LoL Skin Store</title>
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1; 
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -70,15 +83,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
             <li><button id="toggle-dark">🌓 Dark Mode</button></li>
         </ul>
     </nav>
-<div class="login-container">
-    <h2>Accedi</h2>
-    
-    <?php if (isset($_SESSION['success'])): ?>
-        <div class="success">
-            <?php echo htmlspecialchars($_SESSION['success']); ?>
-        </div>
-        <?php unset($_SESSION['success']); ?>
-    <?php endif; ?>
+
+    <main>
+        <div class="login-container">
+            <h2>Accedi</h2>
+
+            <?php if (isset($_SESSION['success'])): ?>
+                <div class="success">
+                    <?php echo htmlspecialchars($_SESSION['success']); ?>
+                </div>
+                <?php unset($_SESSION['success']); ?>
+            <?php endif; ?>
 
     <?php if (!empty($errore)): ?>
         <div class="errore"><?php echo htmlspecialchars($errore); ?></div>
@@ -88,27 +103,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
             <label for="username">Username:</label>
             <input type="text" name="username" id="username" required>
 
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required>
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" required>
 
-            <label>
-                <input type="checkbox" name="ricordami"> Ricordami
-            </label>
+                <label>
+                    <input type="checkbox" name="ricordami"> Ricordami
+                </label>
 
-            <button type="submit">Login</button>
-        </form>
-        <p>Non hai un account? <a href="register.php">Registrati</a></p>
-    </div>
-<script src="assets/js/dark-mode.js"></script>
+                <button type="submit">Login</button>
+            </form>
+            <p>Non hai un account? <a href="register.php">Registrati</a></p>
+        </div>
+    </main>
+
+    <script src="assets/js/dark-mode.js"></script>
     <footer>
-    <div class="footer-container">
-        <p>&copy; Big25 Lol skinshop. Tutti i diritti riservati.</p>
-        <ul class="footer-links">
-            <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Privacy</a></li>
-            <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Termini</a></li>
-            <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Contatti</a></li>
-        </ul>
-    </div>
-</footer>
+        <div class="footer-container">
+            <p>&copy; 2025 Summoner's Shop. Tutti i diritti riservati.</p>
+            <ul class="footer-links">
+                <li><a>📞 +39 370 319 2498</a></li>
+                <li><a>📧 summoner@shop.com</a></li>
+                <li><a>🏠 Faenza</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
 </html>

@@ -13,7 +13,19 @@ $skinList = $stmt->fetchAll();                // Memorizza tutte le skin in un a
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Admin - LoL Skin Store</title>
-    <link rel="stylesheet" href="../assets/css/style.css">       
+    <link rel="stylesheet" href="../assets/css/style.css">  
+    <style>
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1; 
+        }
+    </style>     
 </head>
 <body>
     <nav>
@@ -25,6 +37,7 @@ $skinList = $stmt->fetchAll();                // Memorizza tutte le skin in un a
             <li><a href="../logout.php">Logout</a></li>
         </ul>
     </nav>
+<main>
 
     <div class="container">
         <h1>Dashboard Amministratore</h1>
@@ -74,16 +87,17 @@ $skinList = $stmt->fetchAll();                // Memorizza tutte le skin in un a
             </tbody>
         </table>
     </div>
+</main>
 <script src="../assets/js/dark-mode.js"></script>
-    <footer>
+<footer>
     <div class="footer-container">
-        <p>&copy; Big25 Lol skinshop. Tutti i diritti riservati.</p>
+        <p>&copy; 2025 Summoner's Shop. Tutti i diritti riservati.</p>
         <ul class="footer-links">
-            <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Privacy</a></li>
-            <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Termini</a></li>
-            <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Contatti</a></li>
+            <li><a>📞 +39 370 319 2498</a></li>
+            <li><a>📧 summoner@shop.com</a></li>
+            <li><a>🏠 Faenza</a></li>
         </ul>
     </div>
-</footer>
+</footer> 
 </body>
 </html>
