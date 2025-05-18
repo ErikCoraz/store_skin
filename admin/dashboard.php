@@ -18,6 +18,7 @@ $skinList = $stmt->fetchAll();                // Memorizza tutte le skin in un a
 <body>
     <nav>
         <ul>
+            <img src="../assets/img/logo.png" alt="Logo" style="height: 40px;">
             <li><a href="../index.php">Home</a></li>
             <li><a href="add_skin.php">Aggiungi Skin</a></li>
             <li><button id="toggle-dark">🌓 Dark Mode</button></li>

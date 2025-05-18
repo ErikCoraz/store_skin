@@ -62,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {             // Se il form è stato 
 <body>
 <nav>
     <ul>
+        <img src="../assets/img/logo.png" alt="Logo" style="height: 40px;">
         <li><a href="dashboard.php">Dashboard</a></li>
         <li><button id="toggle-dark">🌓 Dark Mode</button></li>
         <li><a href="../logout.php">Logout</a></li>

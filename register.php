@@ -41,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {                  // Controllo se il 
 <body>
     <nav>
         <ul>
+            <img src="assets/img/logo.png" alt="Logo" style="height: 40px;">
             <li><a href="index.php">Home</a></li>
             <li><button id="toggle-dark">🌓 Dark Mode</button></li>
         </ul>

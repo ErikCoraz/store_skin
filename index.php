@@ -118,6 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 <body>
 <nav>
     <ul>
+        <img src="assets/img/logo.png" alt="Logo" style="height: 40px;">
         <li><a href="index.php">Home</a></li>
         <li><a href="cart.php">Carrello</a></li>
         <li><button id="toggle-dark">🌓 Dark Mode</button></li>
@@ -133,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 </nav>
 
     <main class="container">
-        <h1>Store di Skin LoL</h1>
+        <h1>Toilettongen</h1>
 
 <form method="GET">
     <input type="text" name="search" placeholder="Cerca skin..." value="<?= htmlspecialchars($search) ?>">
