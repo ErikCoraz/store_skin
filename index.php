@@ -96,6 +96,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <meta charset="UTF-8">
     <title>LoL Skin Store</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1; 
+        }
+    </style>
     <script>
         function aggiungiAlCarrello(skinId) {
             fetch('index.php', {
@@ -132,8 +144,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         <?php endif; ?>
     </ul>
 </nav>
-
-    <main class="container">
+<main>
+    <div class="container">
         <h1>Summoner's Shop</h1>
 
 <form method="GET">
@@ -192,8 +204,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         </p>
     </div>
 </div>
-    </main>
-
+</div>
+</main>
 <footer>
     <div class="footer-container">
         <p>&copy; 2025 Summoner's Shop. Tutti i diritti riservati.</p>

@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
     <title>Login - LoL Skin Store</title>
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <style>
+    <style>                       
 
         body {
             display: flex;
