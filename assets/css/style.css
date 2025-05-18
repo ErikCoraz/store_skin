@@ -408,3 +408,35 @@ body.dark-mode .chi-siamo-content {           /* Contenuto Chi Siamo in dark mod
     background-color: #1e1e1e;
     color: #ddd;
 }
+footer {
+    background-color: var(--nav-bg);
+    color: #ffffff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 50px;
+}
+
+.footer-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.footer-links li {
+    display: inline;
+    margin: 0 10px;
+}
+
+.footer-links a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
