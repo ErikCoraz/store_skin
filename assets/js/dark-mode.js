@@ -16,3 +16,16 @@ setTimeout(() => {                                                   // Script p
     document.querySelector('.success').classList.add('fade-out');
     setTimeout(() => document.querySelector('.success').remove(), 500);
 }, 3000);
+
+function toggleChiSiamo() {                                      // Funzione per mostrare/nascondere il contenuto della sezione "Chi Siamo"
+    const content = document.getElementById("chi-siamo-content");
+    const freccia = document.getElementById("freccia");
+
+    if (content.style.display === "block") {
+        content.style.display = "none";
+        freccia.style.transform = "rotate(0deg)";
+    } else {
+        content.style.display = "block";
+        freccia.style.transform = "rotate(90deg)";
+    }
+}

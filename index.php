@@ -177,6 +177,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 </div>
             <?php endforeach; ?>
         </div>
+        <div class="chi-siamo-container">
+    <div class="chi-siamo-header" onclick="toggleChiSiamo()">
+        <span>Chi siamo</span>
+        <span id="freccia">&#9654;</span> 
+    </div>
+    <div id="chi-siamo-content" class="chi-siamo-content">
+        <p>
+            Siamo un gruppo di appassionati di League of Legends, nati con l'obiettivo di creare uno spazio sicuro, semplice e moderno dove ogni evocatore possa trovare la propria skin preferita. Il nostro progetto nasce dall’unione tra passione per il gioco e competenze tecniche nel campo del web development, portando alla creazione di questo store online pensato per tutti, dai novizi agli high elo.
+            Il nostro store è sviluppato interamente da zero, curando ogni dettaglio sia estetico che funzionale: dalla navigazione intuitiva, alla gestione del carrello, fino a un sistema di amministrazione completo. Crediamo nella trasparenza, nella sicurezza dei dati e in un'interfaccia utente chiara e accessibile.
+            Ci impegniamo costantemente per migliorare l’esperienza di acquisto, aggiornando regolarmente il catalogo. Ogni skin disponibile sul sito è selezionata con cura, e ci assicuriamo che l’inventario sia sempre aggiornato in tempo reale.
+            Se ami personalizzare i tuoi campioni e vuoi distinguerti sulla Landa, sei nel posto giusto. Questo sito è stato pensato per te: che tu sia un collezionista, un competitivo o semplicemente un fan dell’estetica del gioco, troverai sempre qualcosa che fa al caso tuo.
+            Grazie per aver scelto il nostro store. GLHF!
+        </p>
+    </div>
+</div>
     </main>
 <script src="assets/js/dark-mode.js"></script>
 </body>
