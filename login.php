@@ -100,5 +100,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
         <p>Non hai un account? <a href="register.php">Registrati</a></p>
     </div>
 <script src="assets/js/dark-mode.js"></script>
+    <footer>
+    <div class="footer-container">
+        <p>&copy; Big25 Lol skinshop. Tutti i diritti riservati.</p>
+        <ul class="footer-links">
+            <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Privacy</a></li>
+            <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Termini</a></li>
+            <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Contatti</a></li>
+        </ul>
+    </div>
+</footer>
 </body>
 </html>
