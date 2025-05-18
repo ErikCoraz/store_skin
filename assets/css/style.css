@@ -1,66 +1,66 @@
-:root {                                /* Variabili CSS per il tema chiaro */
-    --bg-color: #f4f4f4;           
-    --text-color: #333;
-    --card-bg: #fff;
-    --nav-bg: #1e2a38;
-    --link-color: #007bff;
-    --link-hover-bg: #324759;
-    --input-border: #ccc;
-    --primary-color: #007bff;
-    --button-hover: #0056b3;
+:root {                                /* Variabili globali per il tema chiaro */
+    --bg-color: #f4f4f4;               /* Sfondo generale del sito */
+    --text-color: #333;                /* Colore principale del testo */
+    --card-bg: #fff;                   /* Sfondo per card/contenitori */
+    --nav-bg: #1e2a38;                 /* Sfondo della barra di navigazione */
+    --link-color: #007bff;             /* Colore dei link */
+    --link-hover-bg: #324759;          /* Sfondo al passaggio del mouse sui link */
+    --input-border: #ccc;              /* Colore bordo input */
+    --primary-color: #007bff;          /* Colore principale  */
+    --button-hover: #0056b3;           /* Colore pulsanti al passaggio del mouse */
 }
 
-body.dark-mode {                       /* Variabili CSS per il tema scuro */
-    --bg-color: #121212;
-    --text-color: #f0f0f0;
-    --card-bg: #1e1e1e;
-    --nav-bg: #1a1a1a;
-    --link-color: #66b2ff;
-    --link-hover-bg: #333;
-    --input-border: #444;
-    --primary-color: #3399ff;
-    --button-hover: #1a75d1;
+body.dark-mode {                       /* Variabili per il tema scuro */
+    --bg-color: #121212;               /* Sfondo scuro per il body */
+    --text-color: #f0f0f0;             /* Colore testo chiaro */
+    --card-bg: #1e1e1e;                /* Sfondo delle card in dark mode */
+    --nav-bg: #1a1a1a;                 /* Sfondo navbar scuro */
+    --link-color: #66b2ff;             /* Colore link in dark mode */
+    --link-hover-bg: #333;             /* Sfondo link hover in dark mode */
+    --input-border: #444;              /* Bordi input scuri */
+    --primary-color: #3399ff;          /* Colore primario in dark mode */
+    --button-hover: #1a75d1;           /* Colore hover dei bottoni */
 }
 
-* {                                   /* Reset di base per tutti gli elementi */
+* {                                   /* Reset globale per evitare inconsistenze */
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;           /* Include padding e border nel width */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  /* Font moderno */
 }
 
-body {                                     /* Stile di base per il body */
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    min-height: 100vh;
+body {                                /* Stile base del corpo della pagina */
+    background-color: var(--bg-color);/* Sfondo variabile in base al tema */
+    color: var(--text-color);         /* Colore del testo */
+    min-height: 100vh;                /* Altezza minima per coprire l’intero viewport */
 }
 
-nav {                      /* Stile per la barra di navigazione */
-    background-color: var(--nav-bg); 
-    padding: 15px;
+nav {                                 /* Barra di navigazione */
+    background-color: var(--nav-bg);  /* Colore sfondo */
+    padding: 15px;                    /* Spaziatura interna */
 }
 
-nav ul {               /* Stile per la lista di navigazione */
-    list-style: none;
-    display: flex;
-    gap: 20px;
-    justify-content: flex-start;
-    align-items: center;
+nav ul {                              /* Lista dei collegamenti nel menu */
+    list-style: none;                 /* Nessun punto elenco */
+    display: flex;                    /* Layout orizzontale */
+    gap: 20px;                        /* Spaziatura tra gli elementi */
+    justify-content: flex-start;     /* Allineamento a sinistra */
+    align-items: center;             /* Centratura verticale */
 }
 
-nav ul li a, nav ul li span {                 /* Stile per i link di navigazione */
-    color: white; 
-    text-decoration: none;
-    font-weight: bold;
-    padding: 6px 10px;
+nav ul li a, nav ul li span {        /* Link e nomi nella navbar */
+    color: white;                    
+    text-decoration: none;           
+    font-weight: bold;               
+    padding: 6px 10px;               
 }
 
-nav ul li a:hover {                            /* Stile per il passaggio del mouse sui link di navigazione */
+nav ul li a:hover {                  /* Hover sui link navbar */
     background-color: var(--link-hover-bg);
     border-radius: 5px;
 }
 
-#toggle-dark {                   /* Stile per il pulsante di attivazione/disattivazione della modalità scura */
+#toggle-dark {                       /* Bottone per attivare la dark mode */
     background: none;
     border: 1px solid #fff;
     color: #fff;
@@ -69,36 +69,36 @@ nav ul li a:hover {                            /* Stile per il passaggio del mou
     cursor: pointer;
     font-weight: bold;
 }
-#toggle-dark:hover {                             /* Stile per il passaggio del mouse sul pulsante di attivazione/disattivazione della modalità scura */
-    background-color: var(--link-hover-bg); 
+#toggle-dark:hover {                 /* Hover del bottone dark mode */
+    background-color: var(--link-hover-bg);
 }
 
-.container, .login-container {                           /* Stile per i contenitori principali */
+.container, .login-container {       /* Contenitori generici e del login/register */
     max-width: 1000px;
     margin: 40px auto;
     background-color: var(--card-bg);
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Leggera ombra */
 }
 
-h1, h2 {                   /* Stile per i titoli */
+h1, h2 {                             /* Titoli principali */
     margin-bottom: 20px;
     color: var(--text-color);
 }
 
-form {                      /* Stile per i form */
+form {                               /* Form in tutte le pagine */
     margin-top: 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column;          /* Campi disposti in colonna */
     gap: 15px;
 }
 
 input[type="text"],
 input[type="password"],
 input[type="number"],
-input[type="email"],            /* Forse in futuro implementeremo anche l'input email */
-select {                       /* Stile per gli input */
+input[type="email"],
+select {                             /* Campi input */
     padding: 10px;
     border: 1px solid var(--input-border);
     border-radius: 5px;
@@ -108,12 +108,12 @@ select {                       /* Stile per gli input */
 
 input[type="text"]:focus,              
 input[type="password"]:focus,
-select:focus {                           /* Stile per gli input al focus (quando un campo input è selezionato) */
-    border-color: var(--primary-color);   
+select:focus {                       /* Quando si clicca su un input */
+    border-color: var(--primary-color);
     outline: none;
 }
 
-button {                                /* Stile per i pulsanti */
+button {                             /* Stile base dei pulsanti */
     padding: 10px;
     background-color: var(--primary-color);
     color: #fff;
@@ -123,27 +123,27 @@ button {                                /* Stile per i pulsanti */
     cursor: pointer;
 }
 
-button:hover {                      /* Stile per il passaggio del mouse sui pulsanti */
+button:hover {                       /* Hover sui pulsanti */
     background-color: var(--button-hover);
 }
 
-a {                                /* Stile per i link */
+a {                                  /* Link generici */
     color: var(--link-color);
     text-decoration: none;
 }
 
-a:hover {                  /* Stile per il passaggio del mouse sui link */
+a:hover {                            /* Hover sui link */
     text-decoration: underline;
 }
 
-.skin-grid {                 /* Stile per la griglia delle skin */
+.skin-grid {                         /* Griglia che mostra le skin su index.php */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
     margin-top: 30px;
 }
 
-.skin-card {                    /* Stile per le card delle skin */
+.skin-card {                         /* Singola card che mostra una skin */
     background-color: var(--card-bg);
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -152,7 +152,7 @@ a:hover {                  /* Stile per il passaggio del mouse sui link */
     box-shadow: 0 3px 5px rgba(0,0,0,0.05);
 }
 
-.skin-card img {          /* Stile per le immagini delle skin */
+.skin-card img {                     /* Immagine della skin */
     width: 100%;
     height: auto;
     max-height: 180px;
@@ -160,24 +160,24 @@ a:hover {                  /* Stile per il passaggio del mouse sui link */
     border-radius: 5px;
 }
 
-.skin-card h3 {            /* Stile per i titoli delle skin */
+.skin-card h3 {                      /* Titolo/nome skin */
     margin: 10px 0;
     font-size: 18px;
     color: var(--text-color);
 }
 
-.skin-card p {           /* Stile per le descrizioni delle skin */
+.skin-card p {                       /* Descrizione e prezzo skin */
     margin: 5px 0;
 }
 
 .skin-card button,
-.skin-card a {            /* Stile per i pulsanti e i link nelle card delle skin */
+.skin-card a {                       /* Pulsanti Aggiungi al carrello */
     margin-top: 10px;
     display: inline-block;
     width: 100%;
 }
 
-.errore {                           /* Stile per i messaggi di errore */
+.errore {                            /* Messaggi di errore (login, register, acquisti) */
     background-color: #ffe0e0;
     color: #b30000;
     padding: 10px;
@@ -186,18 +186,18 @@ a:hover {                  /* Stile per il passaggio del mouse sui link */
     margin-bottom: 15px;
 }
 
-@media (max-width: 600px) {                      /* Responsive per schermi piccoli */
+@media (max-width: 600px) {          /* Versione mobile del layout */
     nav ul {
-        flex-direction: column;
+        flex-direction: column;      /* Stack verticale */
         align-items: flex-start;
     }
 
     .container, .login-container {
-        padding: 20px;
+        padding: 20px;               /* Riduci padding per mobile */
     }
 }
- 
-.popup {             /* Stile per il popup */
+
+.popup {                             /* Finestra popup per inserire nickname LoL */
   display: none;
   position: fixed;
   top: 30%;
@@ -211,15 +211,15 @@ a:hover {                  /* Stile per il passaggio del mouse sui link */
   border-radius: 8px;
 }
 
-
-.overlay {         /* Stile per lo sfondo del popup */
+.overlay {                           /* Sfondo scuro dietro il popup */
   display: none;
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.6);
   z-index: 5;
 }
-.cart-list {           /* Stile per la lista del carrello */
+
+.cart-list {                         /* Lista di elementi presenti nel carrello */
     list-style: none;
     padding: 0;
     margin: 20px 0;
@@ -228,7 +228,7 @@ a:hover {                  /* Stile per il passaggio del mouse sui link */
     gap: 15px;
 }
 
-.cart-item {                /* Stile per gli elementi del carrello */
+.cart-item {                         /* Card per ogni item nel carrello */
     display: flex;
     align-items: center;
     background-color: var(--card-bg);
@@ -239,27 +239,27 @@ a:hover {                  /* Stile per il passaggio del mouse sui link */
     transition: transform 0.2s;
 }
 
-.cart-item:hover {              /* Stile per il passaggio del mouse sugli elementi del carrello */
+.cart-item:hover {                   /* Leggera animazione al passaggio del mouse */
     transform: scale(1.01);
 }
 
-.cart-item img {              /* Stile per le immagini degli elementi del carrello */
+.cart-item img {                     /* Immagine nella card del carrello */
     width: 70px; 
     height: auto;
     border-radius: 5px;
     margin-right: 20px;
 }
 
-.cart-item span {         /* Stile per il nome dell'oggetto nel carrello */
+.cart-item span {                    /* Nome skin all’interno del carrello */
     flex-grow: 1;
     font-size: 16px;
 }
 
-.cart-item form {         /* Form associato all’item (per rimuovere o acquistare) */
+.cart-item form {                    /* Form per rimuovere/acquistare l’item */
     margin: 0;
 }
 
-.close-btn {            /* Stile per il pulsante di chiusura del popup di acquisto skin (x) */
+.close-btn {                         /* X per chiudere il popup di acquisto */
   position: absolute;
   top: 8px;
   right: 8px;
@@ -273,11 +273,76 @@ a:hover {                  /* Stile per il passaggio del mouse sui link */
   padding: 0;
 }
 
-.close-btn:hover {          /* Stiler per l'hover della x */
+.close-btn:hover {                   /* Hover sulla X */
   opacity: 0.6;
   background: none; 
   color: red;
 }
+table {           /* Stile principale per la tabella dei dati */
+    width: 100%;           /* La tabella occupa tutta la larghezza disponibile */
+    border-collapse: collapse;           /* Unisce i bordi delle celle, rimuovendo gli spazi tra di esse */
+    margin-top: 30px;           /* Aggiunge spazio sopra alla tabella */
+    background-color: var(--card-bg);           /* Sfondo personalizzato (cambia con dark mode) */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);           /* Ombra leggera per effetto sollevato */
+    border-radius: 8px;           /* Angoli arrotondati */
+    overflow: hidden;           /* Nasconde contenuti che escono dai bordi */
+}
 
+thead {           /* Intestazione della tabella */
+    background-color: var(--nav-bg);           /* Sfondo dell'intestazione (cambia con tema) */
+    color: #fff;           /* Testo bianco nell'intestazione */
+}
 
+thead th {           /* Celle dell’intestazione (titoli delle colonne) */
+    padding: 12px 15px;           /* Spaziatura interna */
+    text-align: left;           /* Allinea il testo a sinistra */
+    font-size: 15px;           /* Dimensione leggibile */
+}
 
+tbody td {           /* Celle del corpo della tabella */
+    padding: 12px 15px;           /* Spaziatura interna */
+    border-bottom: 1px solid #ddd;           /* Riga divisoria tra le righe */
+    font-size: 14px;           /* Dimensione testo del contenuto */
+    vertical-align: middle;           /* Centra verticalmente il contenuto */
+}
+
+tbody tr:hover {           /* Righe della tabella al passaggio del mouse */
+    background-color: rgba(0, 0, 0, 0.03);           /* Evidenzia la riga */
+}
+
+tbody img {           /* Immagini nelle celle della tabella */
+    border-radius: 5px;           /* Arrotonda leggermente l'immagine */
+    max-width: 60px;           /* Limita la larghezza */
+    height: auto;           /* Mantiene le proporzioni */
+}
+
+.success {           /* Box per messaggio di successo (es. skin aggiunta/eliminata) */
+    background-color: #d4edda;           /* Verde chiaro di sfondo */
+    color: #155724;           /* Verde scuro per il testo */
+    padding: 10px 15px;           /* Spaziatura interna */
+    border-left: 5px solid #28a745;           /* Bordo decorativo a sinistra */
+    border-radius: 5px;           /* Angoli arrotondati */
+    margin-bottom: 20px;           /* Spazio sotto al messaggio */
+    font-weight: bold;           /* Testo in grassetto */
+}
+
+body.dark-mode .success {           /* Messaggio di successo in dark mode */
+    background-color: #234f2e;           /* Verde scuro di sfondo */
+    color: #d4f7d4;           /* Verde chiaro per il testo */
+    border-left-color: #52d66a;           /* Bordo verde chiaro */
+}
+body.dark-mode .errore {      /* Messaggio di errore in dark mode */
+  background: #3a1d1d;  /* Rosso scuro */
+  color: #ff8a8a;      /* Rosso chiaro */
+  border-left: 4px solid #ff5252; /* Bordo acceso */
+}
+
+td a {           /* Link all'interno delle celle (es. Modifica | Elimina) */
+    color: var(--link-color);           /* Colore personalizzato per i link */
+    font-weight: bold;           /* Più visibile */
+}
+
+td a:hover {           /* Link al passaggio del mouse */
+    text-decoration: underline;           /* Sottolineatura per indicare cliccabilità */
+    color: var(--button-hover);           /* Colore al passaggio del mouse */
+}

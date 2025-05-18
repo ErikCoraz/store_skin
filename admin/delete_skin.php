@@ -27,6 +27,9 @@ if (file_exists($immagine_path)) {                                // Controlla s
 $stmt = $pdo->prepare("DELETE FROM skin WHERE id = ?");          // Prepara la query per eliminare la skin
 $stmt->execute([$id]);
 
+session_start();
+$_SESSION['success'] = "Skin eliminata con successo!";
+
 header('Location: dashboard.php?success=1');                // Reindirizza alla dashboard con messaggio di successo
 exit();
 ?>

@@ -43,13 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {             // Se il form è stato 
             $stmt = $pdo->prepare("UPDATE skin SET nome = ?, campione = ?, prezzo = ?, quantita = ?, immagine = ? WHERE id = ?");
             $stmt->execute([$nome, $campione, $prezzo, $quantita, $immagine, $id]);            // Aggiorna i dati nel database
 
-            $successo = "Skin aggiornata con successo!";                                 // Messaggio di successo
-            $stmt = $pdo->prepare("SELECT * FROM skin WHERE id = ?");                   // Recupera la skin aggiornata
-            $stmt->execute([$id]);
-            $skin = $stmt->fetch(); 
+            $_SESSION['success'] = "Skin aggiornata con successo!";               // Messaggio di successo
+            header("Location: edit_skin.php?id=" . $id);
+            exit();                               
+
         }
-    } else {
-        $errore = "Tutti i campi (eccetto immagine) sono obbligatori.";               // Controlla se i campi sono validi
     }
 }
 ?>
@@ -62,36 +60,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {             // Se il form è stato 
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
+<nav>
+    <ul>
+        <li><a href="dashboard.php">Dashboard</a></li>
+        <li><button id="toggle-dark">🌓 Dark Mode</button></li>
+        <li><a href="../logout.php">Logout</a></li>
+    </ul>
+</nav>
+<div class="container">
     <h1>Modifica Skin</h1>
 
     <?php if (isset($errore)): ?>
-        <p style="color: red;"><?= $errore ?></p>
+        <div class="errore"><?= $errore ?></div>
     <?php endif; ?>
 
-    <?php if (isset($successo)): ?>
-        <p style="color: green;"><?= $successo ?></p>
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="success"><?= htmlspecialchars($_SESSION['success']) ?></div>
+        <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
 
-    <form method="POST" enctype="multipart/form-data">
-        <label>Nome Skin:</label><br>
-        <input type="text" name="nome" value="<?= htmlspecialchars($skin['nome']) ?>"><br><br>
+    <form method="POST" enctype="multipart/form-data" class="form">
+        <div class="form-group">
+            <label for="nome">Nome Skin:</label>
+            <input type="text" name="nome" id="nome" value="<?= htmlspecialchars($skin['nome']) ?>" required>
+        </div>
 
-        <label>Campione:</label><br>
-        <input type="text" name="campione" value="<?= htmlspecialchars($skin['campione']) ?>"><br><br>
+        <div class="form-group">
+            <label for="campione">Campione:</label>
+            <input type="text" name="campione" id="campione" value="<?= htmlspecialchars($skin['campione']) ?>" required>
+        </div>
 
-        <label>Prezzo:</label><br>
-        <input type="text" name="prezzo" value="<?= htmlspecialchars($skin['prezzo']) ?>"><br><br>
+        <div class="form-group">
+            <label for="prezzo">Prezzo:</label>
+            <input type="number" step="0.01" name="prezzo" min=0 id="prezzo" value="<?= htmlspecialchars($skin['prezzo']) ?>" required>
+        </div>
 
-        <label>Quantità:</label><br>
-        <input type="number" name="quantita" value="<?= htmlspecialchars($skin['quantita']) ?>"><br><br>
+        <div class="form-group">
+            <label for="quantita">Quantità:</label>
+            <input type="number" name="quantita" id="quantita" min=0 value="<?= htmlspecialchars($skin['quantita']) ?>" required>
+        </div>
 
-        <label>Immagine (lascia vuoto per non cambiare):</label><br>
-        <input type="file" name="immagine"><br>
-        <img src="../assets/img/<?= $skin['immagine'] ?>" alt="Skin attuale" width="120"><br><br>
+        <div class="form-group">
+            <label for="immagine">Immagine (lascia vuoto per non cambiare):</label>
+            <input type="file" name="immagine" id="immagine">
+            <br>
+            <img src="../assets/img/<?= htmlspecialchars($skin['immagine']) ?>" alt="Skin attuale" style="max-width: 150px; margin-top: 10px;">
+        </div>
 
-        <button type="submit">Salva modifiche</button>
+        <div class="form-actions">
+            <a href="dashboard.php" class="btn btn-secondary">⬅ Torna alla Dashboard</a>
+            <button type="submit" class="btn btn-primary">Salva modifiche</button>
+        </div>
     </form>
-
-    <p><a href="dashboard.php">⬅ Torna alla Dashboard</a></p>
+</div>
+<script src="../assets/js/dark-mode.js"></script>
 </body>
 </html>

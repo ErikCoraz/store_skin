@@ -69,12 +69,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {               // Controllo se il fo
             <li><button id="toggle-dark">🌓 Dark Mode</button></li>
         </ul>
     </nav>
-    <div class="login-container">
-        <h2>Accedi</h2>
-        <?php if (!empty($errore)): ?>
-            <div class="errore"><?php echo htmlspecialchars($errore); ?></div>              <!-- Mostra messaggio di errore se presente -->
-        <?php endif; ?>                                                                  
-        <form method="POST">                                                     <!-- Invia i dati al server -->
+<div class="login-container">
+    <h2>Accedi</h2>
+    
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="success">
+            <?php echo htmlspecialchars($_SESSION['success']); ?>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+
+    <?php if (!empty($errore)): ?>
+        <div class="errore"><?php echo htmlspecialchars($errore); ?></div>
+    <?php endif; ?>
+    
+        <form method="POST">                                             <!-- Invia i dati al server -->
             <label for="username">Username:</label>
             <input type="text" name="username" id="username" required>
 

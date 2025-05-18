@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {                  // Controllo se il 
         try {                                                                                                  
             $stmt = $pdo->prepare("INSERT INTO utenti (username, password, ruolo) VALUES (?, ?, 'utente')");       // Inserimento utente nel database
             $stmt->execute([$username, $hashed_password]);
-            $_SESSION["successo"] = "Registrazione completata. Ora puoi accedere.";                   // Messaggio di successo
+            $_SESSION["success"] = "Registrazione completata. Ora puoi accedere.";                   // Messaggio di successo
             header("Location: login.php");
             exit;
         } catch (PDOException $e) {

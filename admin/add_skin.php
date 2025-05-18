@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {                       // Controlla 
     <nav>
         <ul>
             <li><a href="dashboard.php">Dashboard</a></li>
+            <li><button id="toggle-dark">🌓 Dark Mode</button></li>
             <li><a href="../logout.php">Logout</a></li>
         </ul>
     </nav>
@@ -57,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {                       // Controlla 
         <?php endif; ?>
 
         <?php if ($successo): ?>
-            <div class="successo"><?= htmlspecialchars($successo) ?></div>
+            <div class="success"><?= htmlspecialchars($successo) ?></div>
         <?php endif; ?>
 
         <form method="POST" enctype="multipart/form-data">
@@ -68,10 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {                       // Controlla 
             <input type="text" name="campione" id="campione" required>
 
             <label for="prezzo">Prezzo (€):</label>
-            <input type="number" step="0.01" name="prezzo" id="prezzo" required>
+            <input type="number" step="0.01" min="0" name="prezzo" id="prezzo" required>
 
             <label for="quantita">Quantità:</label>
-            <input type="number" name="quantita" id="quantita" required>
+            <input type="number" min="0" name="quantita" id="quantita" required>
 
             <label for="immagine">Immagine:</label>
             <input type="file" name="immagine" id="immagine" accept="image/*" required>
@@ -79,5 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {                       // Controlla 
             <button type="submit">Aggiungi Skin</button>
         </form>
     </div>
+<script src="../assets/js/dark-mode.js"></script>
 </body>
 </html>

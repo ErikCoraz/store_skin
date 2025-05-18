@@ -18,18 +18,21 @@ $skinList = $stmt->fetchAll();                // Memorizza tutte le skin in un a
 <body>
     <nav>
         <ul>
-            <li><a href="../index.php">Home</a></li>            
-            <li><a href="add_skin.php">Aggiungi Skin</a></li>   
-            <li><a href="../logout.php">Logout</a></li>        
+            <li><a href="../index.php">Home</a></li>
+            <li><a href="add_skin.php">Aggiungi Skin</a></li>
+            <li><button id="toggle-dark">🌓 Dark Mode</button></li>
+            <li><a href="../logout.php">Logout</a></li>
         </ul>
     </nav>
 
     <div class="container">
         <h1>Dashboard Amministratore</h1>
 
-        <?php if (isset($_GET['success'])): ?>
-            <div class="success">Skin eliminata con successo!</div>               <!-- Mostra messaggio di successo se una skin è stata eliminata -->
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="success"><?= htmlspecialchars($_SESSION['success']) ?></div>        <!-- Messaggio di successo -->
+            <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
+
 
 
         <table>                <!-- Tabella con tutte le skin presenti nel database -->
@@ -70,5 +73,6 @@ $skinList = $stmt->fetchAll();                // Memorizza tutte le skin in un a
             </tbody>
         </table>
     </div>
+<script src="../assets/js/dark-mode.js"></script>
 </body>
 </html>
