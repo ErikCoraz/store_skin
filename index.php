@@ -93,8 +93,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <title>LoL Skin Store</title>
+  <meta charset="UTF-8">
+  <title>Summoner's Shop - Compra Skin Esclusive di League of Legends</title>
+  <meta name="description" content="Scopri e acquista skin rare ed esclusive per League of Legends. Offerte, novità e collezioni dei tuoi campioni preferiti.">
+  <meta name="keywords" content="skin LoL, League of Legends, compra skin, skin rare, Yasuo, Ahri, Zed, negozio skin, offerte LoL">
+  <meta name="author" content="Summoner's Shop">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
 
