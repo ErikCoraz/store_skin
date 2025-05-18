@@ -35,7 +35,7 @@ INSERT INTO skin (id, nome, campione, prezzo, quantita, immagine) VALUES
 (9, 'Sentinel Rengar', 'Rengar', 8.99, 8, 'rengar.jpg'),
 (10, 'Pretty Kitty Rengar', 'Rengar', 8.99, 7, 'rengar2.png'),
 (11, 'Ninja Rammus', 'Rammus', 5.99, 6, 'rammus.png'),
-(12, 'Lunar Guardian Khazix', 'Khazix', 7.99, 5, 'khazix.png'),
+(12, 'Groovy Zilean', 'Zilean', 9.99, 5, 'zilean.png'),
 (13, 'Crime City Shaco', 'Shaco', 8.99, 4, 'shaco4.png'),
 (14, 'High Noon Twitch', 'Twitch', 8.99, 3, 'twitch2.png'),
 (15, 'Ruined Draven', 'Draven', 8.99, 2, 'draven2.png'),
@@ -46,8 +46,8 @@ INSERT INTO skin (id, nome, campione, prezzo, quantita, immagine) VALUES
 (20, 'Death Blossom Khazix', 'Khazix', 6.99, 4, 'khazix3.png'),
 (21, 'King Rammus', 'Rammus', 4.99, 3, 'rammus2.png'),
 (22, 'Frejlord Rammus', 'Rammus', 6.99, 5, 'rammus3.png'),
-(23, 'Dunkmaster Ivern', 'Ivern', 10.99, 3, 'ivern.png');
-
+(23, 'Dunkmaster Ivern', 'Ivern', 10.99, 3, 'ivern.png'),
+(24, 'Mecha Aurelion Sol', 'Aurelion Sol', 7.99, 2, 'asol.png');
 
 CREATE TABLE carrello (
     id INT AUTO_INCREMENT PRIMARY KEY,
