@@ -1,18 +1,42 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;,
+:root {
+    --bg-color: #f4f4f4;
+    --text-color: #333;
+    --card-bg: #fff;
+    --nav-bg: #1e2a38;
+    --link-color: #007bff;
+    --link-hover-bg: #324759;
+    --input-border: #ccc;
+    --primary-color: #007bff;
+    --button-hover: #0056b3;
+}
+
+body.dark-mode {
+    --bg-color: #121212;
+    --text-color: #f0f0f0;
+    --card-bg: #1e1e1e;
+    --nav-bg: #1a1a1a;
+    --link-color: #66b2ff;
+    --link-hover-bg: #333;
+    --input-border: #444;
+    --primary-color: #3399ff;
+    --button-hover: #1a75d1;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     min-height: 100vh;
 }
 
 nav {
-    background-color: #1e2a38;
+    background-color: var(--nav-bg);
     padding: 15px;
 }
 
@@ -25,21 +49,34 @@ nav ul {
 }
 
 nav ul li a, nav ul li span {
-    color: #fff;
+    color: var(--text-color);
     text-decoration: none;
     font-weight: bold;
     padding: 6px 10px;
 }
 
 nav ul li a:hover {
-    background-color: #324759;
+    background-color: var(--link-hover-bg);
     border-radius: 5px;
+}
+
+#toggle-dark {
+    background: none;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+#toggle-dark:hover {
+    background-color: var(--link-hover-bg);
 }
 
 .container, .login-container {
     max-width: 1000px;
     margin: 40px auto;
-    background-color: #fff;
+    background-color: var(--card-bg);
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -47,7 +84,7 @@ nav ul li a:hover {
 
 h1, h2 {
     margin-bottom: 20px;
-    color: #1e2a38;
+    color: var(--nav-bg);
 }
 
 form {
@@ -63,20 +100,22 @@ input[type="number"],
 input[type="email"],
 select {
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--input-border);
     border-radius: 5px;
+    background-color: var(--card-bg);
+    color: var(--text-color);
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus,
 select:focus {
-    border-color: #007bff;
+    border-color: var(--primary-color);
     outline: none;
 }
 
 button {
     padding: 10px;
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: #fff;
     font-weight: bold;
     border: none;
@@ -85,11 +124,11 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: var(--button-hover);
 }
 
 a {
-    color: #007bff;
+    color: var(--link-color);
     text-decoration: none;
 }
 
@@ -105,7 +144,7 @@ a:hover {
 }
 
 .skin-card {
-    background-color: #fefefe;
+    background-color: var(--card-bg);
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 15px;
@@ -124,7 +163,7 @@ a:hover {
 .skin-card h3 {
     margin: 10px 0;
     font-size: 18px;
-    color: #222;
+    color: var(--text-color);
 }
 
 .skin-card p {
@@ -164,9 +203,9 @@ a:hover {
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: var(--bg-color, white);
+  background: var(--card-bg);
   padding: 20px;
-  border: 2px solid var(--primary-color, black);
+  border: 2px solid var(--primary-color);
   z-index: 10;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   border-radius: 8px;
