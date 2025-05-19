@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 </nav>
 
     <main class="container">
-        <h1>Summoner's shop</h1>
+        <h1>Summoner's Shop</h1>
 
 <form method="GET">
     <input type="text" name="search" placeholder="Cerca skin..." value="<?= htmlspecialchars($search) ?>">
@@ -196,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
    <footer>
     <div class="footer-container">
-        <p>&copy; Big25 Lol skinshop. Tutti i diritti riservati.</p>
+        <p>&copy; 2025 Summoner's Shop. Tutti i diritti riservati.</p>
         <ul class="footer-links">
             <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Privacy</a></li>
             <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Termini</a></li>
