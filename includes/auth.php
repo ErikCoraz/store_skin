@@ -31,6 +31,12 @@ function isLoggedIn() {
             $_SESSION['username'] = $row['username'];
             $_SESSION['ruolo'] = $row['ruolo'];
 
+            $stmtCart = $pdo->prepare("SELECT id_skin FROM carrello WHERE id_utente = ?");     // Recupera gli ID delle skin nel carrello dell'utente dopo il login automatico
+            $stmtCart->execute([$row['user_id']]);
+            $carrello = $stmtCart->fetchAll(PDO::FETCH_COLUMN);
+            $_SESSION['carrello'] = $carrello;
+
+
             return true;
         } else {
             setcookie('remember_token', '', time() - 3600, '/');          // Se il token non è valido o è scaduto, il cookie viene eliminato
