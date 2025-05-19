@@ -120,9 +120,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {       
 
     <div class="popup" id="popup">
     <button class="close-btn" onclick="chiudiPopup()">&times;</button>
-    <h3>Inserisci il tuo nickname LoL</h3>
-    <input type="text" id="nickname" placeholder="Nickname">
-    <button onclick="inviaAcquisto()">Invia</button>
+<h3>Dati per l'acquisto</h3>
+<form id="acquistoForm" onsubmit="event.preventDefault(); inviaAcquisto();">
+    <input type="text" id="nickname" placeholder="Nickname LoL" required>
+
+    <select id="regione" required>
+        <option value="">Seleziona Regione</option>
+        <option value="EUW">EUW</option>
+        <option value="EUNE">EUNE</option>
+        <option value="NA">NA</option>
+        <option value="KR">KR</option>
+        <option value="BR">BR</option>
+    </select>
+
+    <input type="text" id="numeroCarta" placeholder="Numero Carta di Credito" required pattern="\d{16}" title="Inserisci 16 cifre">
+    <input type="text" id="scadenza" placeholder="MM/AA" required pattern="\d{2}/\d{2}" title="Formato MM/AA">
+    <input type="text" id="cvv" placeholder="CVV" required pattern="\d{3}" title="Inserisci un CVV di 3 cifre">
+    
+    <button type="submit">Invia</button>
+</form>
+
 </div>
 
 
@@ -137,31 +154,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['nickname'])) {       
             document.getElementById('popup').style.display = 'block';
         }
 
-        function chiudiPopup() {
+        function chiudiPopup() {                                         // Funzione per chhiudere il popup
         document.getElementById('popup').style.display = 'none';
         document.getElementById('overlay').style.display = 'none';
 }
 
 
-        function inviaAcquisto() {
-            const nickname = document.getElementById('nickname').value;
-            if (!nickname) return alert("Inserisci il tuo nickname");
+function inviaAcquisto() {                                                   // Funzione per inviare i dati dell'acquisto
+    const nickname = document.getElementById('nickname').value.trim();
+    const regione = document.getElementById('regione').value;
+    const numeroCarta = document.getElementById('numeroCarta').value.trim();
+    const scadenza = document.getElementById('scadenza').value.trim();
+    const cvv = document.getElementById('cvv').value.trim();
 
-            fetch('cart.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ nickname })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('popup').style.display = 'none';
-                    document.getElementById('conferma').style.display = 'block';
-                } else if (data.out_of_stock) {
-                    alert("Le seguenti skin sono esaurite:\n\n" + data.out_of_stock.join('\n'));
-                }
-});
+    if (!nickname || !regione || !numeroCarta || !scadenza || !cvv) {
+        return alert("Compila tutti i campi obbligatori.");
+    }
 
+    if (!/^\d{16}$/.test(numeroCarta)) {
+        return alert("Il numero della carta deve contenere 16 cifre.");
+    }
+
+    if (!/^\d{2}\/\d{2}$/.test(scadenza)) {
+        return alert("La scadenza deve essere nel formato MM/AA.");
+    }
+    const [meseStr, annoStr] = scadenza.split('/');                          // Estrae mese e anno dalla stringa di scadenza
+    const mese = parseInt(meseStr, 10);                                  
+    const anno = parseInt(annoStr, 10) + 2000;                            // es: "25" -> 2025
+
+    const oggi = new Date();                                      // Ottiene la data corrente
+    const annoCorrente = oggi.getFullYear();                     
+    const meseCorrente = oggi.getMonth() + 1;          // Mesi partono da 0 in JS quindi aggiungiamo +1 (gennaio = 0, 0 + 1 = 1)                       
+
+    if (mese < 1 || mese > 12) {
+        return alert("Mese di scadenza non valido.");
+    }
+
+    if (anno < annoCorrente || (anno === annoCorrente && mese < meseCorrente)) {
+        return alert("La carta di credito è scaduta.");
+    }
+
+    if (!/^\d{3}$/.test(cvv)) {
+        return alert("Il CVV deve contenere 3 cifre.");
+    }
+    fetch('cart.php', {                       // fetch invia un richiesta HTTP POST a cart.php
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, // Specifica che i dati sono in formato URL-encoded, come in un form HTML
+        body: new URLSearchParams({ nickname })       // Invia solo il nickname
+    })
+    .then(res => res.json())              // Converte la risposta in JSON
+    .then(data => {                        // Gestisce la risposta JSON
+        if (data.success) {                             // Se l'acquisto è andato a buon fine
+            document.getElementById('popup').style.display = 'none';    // Chiude il popup
+            document.getElementById('conferma').style.display = 'block';   // Mostra il popup con scritto "Acquisto riuscito!"
+        } else if (data.out_of_stock) {
+            alert("Le seguenti skin sono esaurite:\n\n" + data.out_of_stock.join('\n'));      // Mostra un alert con il nome delle skin esaurite
+        }
+    });
 }
     </script>
 <script src="assets/js/dark-mode.js"></script>
