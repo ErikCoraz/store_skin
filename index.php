@@ -193,8 +193,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     </div>
 </div>
     </main>
-<script src="assets/js/dark-mode.js"></script>
-    <footer>
+
+   <footer>
     <div class="footer-container">
         <p>&copy; Big25 Lol skinshop. Tutti i diritti riservati.</p>
         <ul class="footer-links">
@@ -203,6 +203,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Contatti</a></li>
         </ul>
     </div>
-</footer>
+</footer> 
+
+<script src="assets/js/dark-mode.js"></script>
 </body>
 </html>

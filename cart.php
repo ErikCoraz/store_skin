@@ -223,6 +223,6 @@ function inviaAcquisto() {                                                   // 
             <li><a href="https://youtube.com/shorts/41iWg91yFv0?si=SJ_-3r8-p_JZ7alH">Contatti</a></li>
         </ul>
     </div>
-</footer>
+    </footer> 
 </body>
 </html>
